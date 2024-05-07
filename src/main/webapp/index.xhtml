@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Inicio Emisora</title>
+</h:head>
+<h:body>
+    <h3>¡Bienvenido!</h3>
+    <h3>Ajustes de la Emisora</h3>
+    <br></br>
+    
+    
+    <h:form>
+        <p:panel header="Ajustes de la Emisora" style="width:350px">
+            <h:outputLabel for="nombreBanda" value="Nombre de la Banda:" />
+            <h:inputText value="#{usuarioBean.nombreBanda}"></h:inputText>
+            <br></br>   <br></br>
+            <h:outputLabel for="tipoEmisora" value="Tipo de Emisora:" />
+            <p:selectOneMenu value="#{usuarioBean.tipoEmisora}">
+            
+                <f:selectItem itemLabel="AM" itemValue="AM" />
+                <f:selectItem itemLabel="FM" itemValue="FM" />
+                <f:selectItem itemLabel="Streaming" itemValue="Streaming" />
+            </p:selectOneMenu>
+            <br></br>   <br></br>
+            <h:outputLabel for="generoMusical" value="Género Musical:" />
+            <p:selectOneMenu value="#{usuarioBean.generoMusical}">
+                <f:selectItem itemLabel="Jazz" itemValue="Jazz" />
+                <f:selectItem itemLabel="Pop" itemValue="Pop" />
+                <f:selectItem itemLabel="Rock" itemValue="Rock" />
+                <f:selectItem itemLabel="Latina" itemValue="Latina" />
+                <f:selectItem itemLabel="Clásica" itemValue="Clásica" />
+            </p:selectOneMenu>
+            <br></br>
+            <f:facet name="footer">
+                <h:commandButton action="#{usuarioBean.registrar}" value="Registrar"></h:commandButton>
+            </f:facet>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
