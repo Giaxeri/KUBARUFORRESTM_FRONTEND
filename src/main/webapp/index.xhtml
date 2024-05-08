@@ -1,47 +1,137 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"> 
 <h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Inicio Emisora</title>
-</h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Inicio Emisora</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;display=swap" rel="stylesheet" />
+
+	<style>
+        .poppins-semibold {
+			margin: 0;
+			padding: 0;
+			font-family: "Poppins", sans-serif;
+			font-weight: 600;
+			font-style: normal;
+			box-sizing: border-box;
+		}
+
+        .container {
+			font-family: "Poppins", sans-serif;
+			font-weight: 600;
+			font-style: normal;
+			color: white;
+			width: 430px;
+			height: 600px;
+			position: fixed;
+			top: 50%;
+			left: 25%;
+			transform: translate(-50%, -50%);
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #1e1f22;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			text-align: center; /* Alinea el texto horizontalmente */
+		}
+
+        .topbar-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			background: #1e1f22;
+			height: 50px;
+		}
+
+        .logo-img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 300%;
+		}
+
+        html {
+			background-color: #2f2f2f;
+			margin: 0;
+			padding: 0;
+		}
+
+        .letrapequena {
+			font-size: 12px;
+		}
+
+        .complementary-img {
+			position: absolute;
+			top: 50%;
+			right: -19%;
+			transform: translate(-50%, -50%);
+		}
+   
+    </style>
+    <script>
+    function mostrarBoton() {
+        var inputText = document.querySelector('input[name="javax.faces.ViewState"]');
+        var boton = document.querySelector('#proximo-btn'); // Cambio aquí
+
+        // Verifica si el campo de texto tiene algún valor
+        if (inputText.value.trim() !== "") {
+            boton.style.display = 'inline';
+        } else {
+            boton.style.display = 'none';
+        }
+    }
+</script>
+     
+</h:head> 
+
 <h:body>
-    <h3>¡Bienvenido!</h3>
-    <h3>Ajustes de la Emisora</h3>
-    <br></br>
+  <div class="complementary-img">
     
+    </div>
+
+    <div class="topbar-container">
+        
+    </div>
     
-    <h:form>
-        <p:panel header="Ajustes de la Emisora" style="width:350px">
-            <h:outputLabel for="nombreBanda" value="Nombre de la Banda:" />
-            <h:inputText value="#{usuarioBean.nombreBanda}"></h:inputText>
-            <br></br>   <br></br>
-            <h:outputLabel for="tipoEmisora" value="Tipo de Emisora:" />
-            <p:selectOneMenu value="#{usuarioBean.tipoEmisora}">
-            
+	<h:form>
+    <panel styleClass="topbar-container" style="background-color: #333333;">
+        <div class="container"> 
+            <h3>¡Bienvenido!</h3> 
+            <h3>Ajustes de la Emisora</h3> <br /> 
+            <label>Nombre de la Banda: </label> 
+            <h:inputText value="#{emisoraBean.nombreBanda}" onkeyup="mostrarBoton()"></h:inputText>
+<br></br><br></br>
+            <label>Tipo de Emisora: </label> 
+            <p:selectOneMenu value="#{emisoraBean.tipoEmisora}">
                 <f:selectItem itemLabel="AM" itemValue="AM" />
                 <f:selectItem itemLabel="FM" itemValue="FM" />
                 <f:selectItem itemLabel="Streaming" itemValue="Streaming" />
-            </p:selectOneMenu>
-            <br></br>   <br></br>
-            <h:outputLabel for="generoMusical" value="Género Musical:" />
-            <p:selectOneMenu value="#{usuarioBean.generoMusical}">
-                <f:selectItem itemLabel="Jazz" itemValue="Jazz" />
-                <f:selectItem itemLabel="Pop" itemValue="Pop" />
-                <f:selectItem itemLabel="Rock" itemValue="Rock" />
-                <f:selectItem itemLabel="Latina" itemValue="Latina" />
-                <f:selectItem itemLabel="Clásica" itemValue="Clásica" />
-            </p:selectOneMenu>
-            <br></br>
-            <f:facet name="footer">
-                <h:commandButton action="#{usuarioBean.registrar}" value="Registrar"></h:commandButton>
-            </f:facet>
-        </p:panel>
-    </h:form>
-</h:body>
+            </p:selectOneMenu> <br /> <br /> 
+            <label>Género Musical:</label>
+            <div class="select-box">
+                <p:selectOneMenu value="#{emisoraBean.generoMusical}">
+                    <f:selectItem itemLabel="Jazz" itemValue="Jazz" />
+                    <f:selectItem itemLabel="Pop" itemValue="Pop" />
+                    <f:selectItem itemLabel="Rock" itemValue="Rock" />
+                    <f:selectItem itemLabel="Latina" itemValue="Latina" />
+                    <f:selectItem itemLabel="Clásica" itemValue="Clásica" />
+                </p:selectOneMenu> 
+            </div>
+            <br />  <br />  <br />  <br />  <br />  <br />  
+            <a href="gestioncanciones.xhtml" class="proximo-btn" id="proximo-btn" style="display: none; color: white">Próxima Etapa</a> 
+            <br /> <br />
+            <br /> 
+            <label class="letrapequena">Página Desarollada por Kubaru ©</label> 
+        </div>
+    </panel>
+</h:form>
+</h:body> 
 </html>
