@@ -258,22 +258,22 @@ a span {
 				<label for="nombre-artista" class="poppins-semibold"
 					style="color: white;">Nombre del Artista:</label>
 
-				<h:inputText id="nombre-artista" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{bean.nombreArtista}"></h:inputText>
+				<h:inputText id="nombre-artista" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.nombreArtista}"></h:inputText>
 
 				<br></br>
 				<br></br>
 				<label for="nombre-cancion" class="poppins-semibold"
 					style="color: white;">Nombre de la Canción:</label>
-				<h:inputText id="nombre-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{bean.nombreCancion}"></h:inputText>
+				<h:inputText id="nombre-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.nombreCancion}"></h:inputText>
 				<br> </br>
 				<label for="url-cancion" class="poppins-semibold" style="color: white;">URL de la Canción:</label>
-				<h:inputText id="url-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{bean.urlCancion}"></h:inputText>
+				<h:inputText id="url-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.rutaDeLArchivo}"></h:inputText>
 
 				<br></br>
 				<br></br>
 				<label class="poppins-semibold" style="color: white;">Género Musical:</label>
 
-				<h:selectOneMenu id="genero" value="#{bean.generoMusical}">
+				<h:selectOneMenu id="genero" value="#{cancionBean.generoMusical}">
 					<f:selectItem itemLabel="Jazz" itemValue="Jazz" />
 					<f:selectItem itemLabel="Pop" itemValue="Pop" />
 					<f:selectItem itemLabel="Rock" itemValue="Rock" />
