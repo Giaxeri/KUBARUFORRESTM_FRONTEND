@@ -65,7 +65,7 @@ public class EmisoraBean {
 
 			// JSON para eliminar por nombre de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreBanda); // Nombre de la canción a eliminar
+			jsonRequest.put("nombre", nombreBanda); 
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));

@@ -70,7 +70,7 @@ public class cancionBean {
 
 			// JSON para eliminar por nombre de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreCancion); // Nombre de la canción a eliminar
+			jsonRequest.put("nombre", nombreCancion);
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
