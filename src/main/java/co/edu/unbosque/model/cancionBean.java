@@ -60,7 +60,7 @@ public class cancionBean {
 		this.emisora = emisora;
 	}
 	public static int eliminarCancion(String nombreCancion) throws IOException {
-		URL url = new URL(nombreCancion + "canciones/eliminar");
+		URL url = new URL(nombreCancion + "canciones/eliminar/{nombre}");
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {

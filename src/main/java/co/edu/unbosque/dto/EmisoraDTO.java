@@ -9,6 +9,17 @@ public class EmisoraDTO {
 	public EmisoraDTO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public EmisoraDTO(String nombreBanda, String tipoEmisora, String generoMusical) {
+		super();
+		this.nombreBanda = nombreBanda;
+		this.tipoEmisora = tipoEmisora;
+		this.generoMusical = generoMusical;
+	}
+
+
 
 	public String getNombreBanda() {
 		return nombreBanda;

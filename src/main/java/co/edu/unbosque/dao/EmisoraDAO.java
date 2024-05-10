@@ -36,12 +36,12 @@ public class EmisoraDAO {
 			json += (char) inp[i];
 		}
 		ArrayList<EmisoraDTO> lista = new ArrayList<EmisoraDTO>();
-		lista = parsingEmisoraDTO(json);
+		lista = parseingEmisoraDTO(json);
 		http.disconnect();
 		return lista;
 	}
 
-	public static ArrayList<EmisoraDTO> parsingEmisoraDTO(String json)
+	public static ArrayList<EmisoraDTO> parseingEmisoraDTO(String json)
 			throws ParseException, org.json.simple.parser.ParseException {
 		JSONParser jsonParser = new JSONParser();
 		ArrayList<EmisoraDTO> lista = new ArrayList<EmisoraDTO>();

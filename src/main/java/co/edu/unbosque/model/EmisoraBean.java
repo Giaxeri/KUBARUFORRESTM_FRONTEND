@@ -5,22 +5,26 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 
 import org.primefaces.shaded.json.JSONObject;
 
+import co.edu.unbosque.dao.CancionDAO;
+import co.edu.unbosque.dao.EmisoraDAO;
+import co.edu.unbosque.dto.CancionDTO;
 import co.edu.unbosque.dto.EmisoraDTO;
 
 @ManagedBean
 
 public class EmisoraBean {
 
-	private int id;
 	private String nombreBanda;
 	private String tipoEmisora;
 	private String generoMusical;
-	private String resultado;
+	private int resultado;
 
 	public String getNombreBanda() {
 		return nombreBanda;
@@ -46,36 +50,25 @@ public class EmisoraBean {
 		this.generoMusical = generoMusical;
 	}
 
-	public String getResultado() {
+	public int getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(String resultado) {
+	public void setResultado(int resultado) {
 		this.resultado = resultado;
 	}
 
-	public static int eliminarEmisora(String nombreBanda) throws IOException {
-		URL url = new URL(nombreBanda + "emisora/eliminar");
+	public void crearEmisora() throws IOException {
+		EmisoraDAO temp = new EmisoraDAO();
+		String isApproved = "";
 
-		HttpURLConnection http = (HttpURLConnection) url.openConnection();
-		try {
-			http.setRequestMethod("DELETE");
-			http.setDoOutput(true);
-			http.setRequestProperty("Content-Type", "application/json");
+		this.resultado = temp
+				.postJSON(new EmisoraDTO(this.getNombreBanda(), this.getTipoEmisora(), this.getGeneroMusical()));
+	}
 
-			// JSON para eliminar por nombre de la canción
-			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreBanda); 
-
-			OutputStream outputStream = http.getOutputStream();
-			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
-			outputStream.flush();
-
-			int respuesta = http.getResponseCode();
-			return respuesta;
-		} finally {
-			http.disconnect();
-		}
+	public ArrayList<EmisoraDTO> mostrar() throws IOException, ParseException, org.json.simple.parser.ParseException {
+		EmisoraDAO emi = new EmisoraDAO();
+		return emi.getJSON();
 	}
 
 }
