@@ -61,9 +61,11 @@ public class EmisoraBean {
 	public void crearEmisora() throws IOException {
 		EmisoraDAO temp = new EmisoraDAO();
 		String isApproved = "";
+		EmisoraDTO emisora = new EmisoraDTO(this.getNombreBanda(), this.getTipoEmisora(), this.getGeneroMusical());
 
-		this.resultado = temp
-				.postJSON(new EmisoraDTO(this.getNombreBanda(), this.getTipoEmisora(), this.getGeneroMusical()));
+		this.resultado = temp.postJSON(emisora);
+
+		CookiesBean.createCookieForEmisora(emisora);
 	}
 
 	public ArrayList<EmisoraDTO> mostrar() throws IOException, ParseException, org.json.simple.parser.ParseException {
