@@ -71,7 +71,7 @@ public class EmisoraDAO {
 		http.setDoOutput(true);
 		http.setRequestProperty("Accept", "application/json");
 		http.setRequestProperty("Content-Type", "application/json");
-		String data = "{" + "\"nombreBanda\":\"" + emisora.getNombreBanda() + "\",\"tipoEmisora\": \""
+		String data = "{" + "\"nombreEmisora\":\"" + emisora.getNombreBanda() + "\",\"tipoEmisora\": \""
 				+ emisora.getTipoEmisora() + "\",\"generoMusical\": \"" + emisora.getGeneroMusical() + "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
@@ -92,7 +92,7 @@ public class EmisoraDAO {
 
 			// Construccion de los neuvos datos
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreBanda", nombreEmisora);
+			jsonRequest.put("nombreEmisora", nombreEmisora);
 			jsonRequest.put("tipoEmisora", nuevaEmisora.getTipoEmisora());
 			jsonRequest.put("generoMusical", nuevaEmisora.getGeneroMusical());
 
@@ -120,7 +120,7 @@ public class EmisoraDAO {
 
 			// JSON para eliminar por nombre
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreBanda", nombreEmisora); // Nombre de la emisora a eliminar
+			jsonRequest.put("nombreEmisora", nombreEmisora); // Nombre de la emisora a eliminar
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
