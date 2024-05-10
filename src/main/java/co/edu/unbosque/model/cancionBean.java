@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 
 import org.primefaces.shaded.json.JSONObject;
 
+import co.edu.unbosque.dao.CancionDAO;
+import co.edu.unbosque.dto.CancionDTO;
 import co.edu.unbosque.dto.EmisoraDTO;
 
 @ManagedBean
@@ -19,6 +21,7 @@ public class cancionBean {
 	private String generoMusical;
 	private String rutaDelArchivo;
 	private EmisoraDTO emisora;
+	private int resultado;
 
 	public String getNombreCancion() {
 		return nombreCancion;
@@ -59,28 +62,25 @@ public class cancionBean {
 	public void setEmisora(EmisoraDTO emisora) {
 		this.emisora = emisora;
 	}
-	public static int eliminarCancion(String nombreCancion) throws IOException {
-		URL url = new URL(nombreCancion + "canciones/eliminar/{nombre}");
 
-		HttpURLConnection http = (HttpURLConnection) url.openConnection();
-		try {
-			http.setRequestMethod("DELETE");
-			http.setDoOutput(true);
-			http.setRequestProperty("Content-Type", "application/json");
+	public void eliminarCancion(String nombreCancion) throws IOException {
 
-			// JSON para eliminar por nombre de la canción
-			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreCancion);
+		CancionDAO cancion = new CancionDAO();
+		this.resultado = cancion.eliminarCancion(nombreCancion);
+	}
 
-			OutputStream outputStream = http.getOutputStream();
-			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
-			outputStream.flush();
+	public void registrar() throws IOException {
+		CancionDAO temp = new CancionDAO();
+		String isApproved = "";
 
-			int respuesta = http.getResponseCode();
-			return respuesta;
-		} finally {
-			http.disconnect();
-		}
+		CancionDTO cancion = new CancionDTO(this.getNombreCancion(), this.getNombreArtista(), this.getGeneroMusical(),
+				this.getRutaDelArchivo(), CookiesBean.getEmisoraFromCookies());
+		this.resultado = temp.crearCancion(cancion);
+	}
+
+	public void actualizar() throws IOException { // ACTUALIZAR EN CONSTRUCCION
+		CancionDAO temp = new CancionDAO();
+		this.resultado = temp.actualizarCancion(nombreCancion, null);
 	}
 
 }
