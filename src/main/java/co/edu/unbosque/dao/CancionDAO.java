@@ -2,11 +2,15 @@ package co.edu.unbosque.dao;
 
 //PRUEBA DAO
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
 import co.edu.unbosque.dto.*;
 
@@ -92,5 +96,54 @@ public class CancionDAO {
 		} finally {
 			http.disconnect();
 		}
+
 	}
+
+	public static List<CancionDTO> listarCanciones() throws IOException {
+		URL url = new URL(sitio + "canciones/listar");
+
+		HttpURLConnection http = (HttpURLConnection) url.openConnection();
+		try {
+			http.setRequestMethod("GET");
+			http.setRequestProperty("Accept", "application/json");
+
+			InputStream respuesta = http.getInputStream();
+			byte[] inp = respuesta.readAllBytes();
+			String json = new String(inp, StandardCharsets.UTF_8);
+
+			List<CancionDTO> canciones = parsearListaCanciones(json);
+			return canciones;
+		} finally {
+			http.disconnect();
+		}
+	}
+
+	private static List<CancionDTO> parsearListaCanciones(String json) {
+		List<CancionDTO> canciones = new ArrayList<>();
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < ((CharSequence) jsonArray).length(); i++) {
+			JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+			CancionDTO cancion = new CancionDTO();
+
+			cancion.setNombreCancion(jsonObject.getString("nombre"));
+			cancion.setNombreArtista(jsonObject.getString("artista"));
+			cancion.setGeneroMusical(jsonObject.getString("generoMusical"));
+			cancion.setRutaDelArchivo(jsonObject.getString("ubicacionMP3"));
+
+			// Parsear el objeto EmisoraDTO
+			JSONObject jsonEmisora = jsonObject.getJSONObject("emisora");
+			EmisoraDTO emisoraDTO = new EmisoraDTO();
+			emisoraDTO.setNombreBanda(jsonEmisora.getString("nombreBanda"));
+			emisoraDTO.setTipoEmisora(jsonEmisora.getString("tipoEmisora"));
+			emisoraDTO.setGeneroMusical(jsonEmisora.getString("generoMusical"));
+
+			cancion.setEmisora(emisoraDTO);
+
+			canciones.add(cancion);
+		}
+
+		return canciones;
+	}
+
 }
