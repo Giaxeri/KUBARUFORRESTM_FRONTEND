@@ -50,9 +50,9 @@ public class EmisoraDAO {
 		while (i.hasNext()) {
 			JSONObject innerObj = (JSONObject) i.next();
 			EmisoraDTO emisora = new EmisoraDTO();
-			emisora.setNombreBanda(innerObj.getString("Nombre Emisora: ".toString()));
-			emisora.setTipoEmisora(innerObj.getString("tipo de la emisora: ".toString()));
-			emisora.setGeneroMusical(innerObj.getString("Genero musical: ".toString()));
+			emisora.setNombreBanda(innerObj.getString("NombreEmisora: ".toString()));
+			emisora.setTipoEmisora(innerObj.getString("modoTransmicion: ".toString()));
+			emisora.setGeneroMusical(innerObj.getString("tipoMusica: ".toString()));
 			lista.add(emisora);
 		}
 		return lista;
@@ -71,8 +71,8 @@ public class EmisoraDAO {
 		http.setDoOutput(true);
 		http.setRequestProperty("Accept", "application/json");
 		http.setRequestProperty("Content-Type", "application/json");
-		String data = "{" + "\"nombreEmisora\":\"" + emisora.getNombreBanda() + "\",\"tipoEmisora\": \""
-				+ emisora.getTipoEmisora() + "\",\"generoMusical\": \"" + emisora.getGeneroMusical() + "\"}";
+		String data = "{" + "\"nombreEmisora\":\"" + emisora.getNombreBanda() + "\",\"modoTransmicion\": \""
+				+ emisora.getTipoEmisora() + "\",\"tipoMusica\": \"" + emisora.getGeneroMusical() + "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
 		stream.write(out);
@@ -93,8 +93,8 @@ public class EmisoraDAO {
 			// Construccion de los neuvos datos
 			JSONObject jsonRequest = new JSONObject();
 			jsonRequest.put("nombreEmisora", nombreEmisora);
-			jsonRequest.put("tipoEmisora", nuevaEmisora.getTipoEmisora());
-			jsonRequest.put("generoMusical", nuevaEmisora.getGeneroMusical());
+			jsonRequest.put("modoTransmicion", nuevaEmisora.getTipoEmisora());
+			jsonRequest.put("tipoMusica", nuevaEmisora.getGeneroMusical());
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));

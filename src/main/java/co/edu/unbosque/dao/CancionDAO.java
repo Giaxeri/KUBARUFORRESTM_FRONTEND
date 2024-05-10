@@ -29,10 +29,10 @@ public class CancionDAO {
 
 			// Construcción del objeto JSON para la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", cancion.getNombreCancion());
-			jsonRequest.put("artista", cancion.getNombreArtista());
+			jsonRequest.put("nombreCancion", cancion.getNombreCancion());
+			jsonRequest.put("nombreArtista", cancion.getNombreArtista());
 			jsonRequest.put("generoMusical", cancion.getGeneroMusical());
-			jsonRequest.put("ubicacionMP3", cancion.getRutaDelArchivo());
+			jsonRequest.put("rutaDelArchivo", cancion.getRutaDelArchivo());
 			jsonRequest.put("emisora", cancion.getEmisora());
 
 			OutputStream outputStream = http.getOutputStream();
@@ -57,10 +57,10 @@ public class CancionDAO {
 
 			// Construcción del objeto JSON para la actualización de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreCancion); // Nombre de la canción a actualizar
-			jsonRequest.put("artista", nuevaCancion.getNombreArtista());
+			jsonRequest.put("nombreCancion", nombreCancion); // Nombre de la canción a actualizar
+			jsonRequest.put("nombreArtista", nuevaCancion.getNombreArtista());
 			jsonRequest.put("generoMusical", nuevaCancion.getGeneroMusical());
-			jsonRequest.put("ubicacionMP3", nuevaCancion.getRutaDelArchivo());
+			jsonRequest.put("rutaDelArchivo", nuevaCancion.getRutaDelArchivo());
 			jsonRequest.put("emisora", nuevaCancion.getEmisora());
 
 			OutputStream outputStream = http.getOutputStream();
@@ -126,17 +126,17 @@ public class CancionDAO {
 			JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 			CancionDTO cancion = new CancionDTO();
 
-			cancion.setNombreCancion(jsonObject.getString("nombre"));
-			cancion.setNombreArtista(jsonObject.getString("artista"));
+			cancion.setNombreCancion(jsonObject.getString("nombreCancion"));
+			cancion.setNombreArtista(jsonObject.getString("nombreArtista"));
 			cancion.setGeneroMusical(jsonObject.getString("generoMusical"));
-			cancion.setRutaDelArchivo(jsonObject.getString("ubicacionMP3"));
+			cancion.setRutaDelArchivo(jsonObject.getString("rutaDelArchivo"));
 
 			// Parsear el objeto EmisoraDTO
 			JSONObject jsonEmisora = jsonObject.getJSONObject("emisora");
 			EmisoraDTO emisoraDTO = new EmisoraDTO();
-			emisoraDTO.setNombreBanda(jsonEmisora.getString("nombreBanda"));
-			emisoraDTO.setTipoEmisora(jsonEmisora.getString("tipoEmisora"));
-			emisoraDTO.setGeneroMusical(jsonEmisora.getString("generoMusical"));
+			emisoraDTO.setNombreBanda(jsonEmisora.getString("nombreEmisora"));
+			emisoraDTO.setTipoEmisora(jsonEmisora.getString("modoTransmicion"));
+			emisoraDTO.setGeneroMusical(jsonEmisora.getString("tipoMusica"));
 
 			cancion.setEmisora(emisoraDTO);
 
