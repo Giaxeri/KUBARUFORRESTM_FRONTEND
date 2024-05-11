@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+
 import co.edu.unbosque.dao.EmisoraDAO;
 import co.edu.unbosque.dto.EmisoraDTO;
 
@@ -61,21 +64,33 @@ public class EmisoraBean {
 		this.resultado = resultado;
 	}
 
-	public String crearEmisora() throws IOException {
-		new EmisoraDAO();
-		EmisoraDTO emisora = new EmisoraDTO(this.getNombreBanda(), this.getTipoEmisora(), this.getGeneroMusical());
+	 public String crearEmisora() {
+	        try {
+	            EmisoraDTO emisora = new EmisoraDTO(this.nombreBanda, this.tipoEmisora, this.generoMusical);
 
-		EmisoraDAO.postJSON(emisora);
+	            // Lógica para guardar la emisora en la base de datos o servicio
+	            EmisoraDAO.postJSON(emisora);
 
-		CookiesBean.createCookieForEmisora(emisora);
+	            // Mensaje de éxito
+	            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Emisora registrada correctamente.", null));
 
-		return "gestioncanciones.xhtml";
+	            // Redirección a gestioncanciones.xhtml
+	            return "gestioncanciones?faces-redirect=true";
+	        } catch (IOException e) {
+	            // Manejo de errores de entrada/salida
+	            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar la emisora.", null));
+	            return null; // Otra página de error o mantenimiento
+	        }
+	    }
 
-	}
-
-	public ArrayList<EmisoraDTO> mostrar() throws IOException, ParseException, org.json.simple.parser.ParseException {
-		EmisoraDAO emi = new EmisoraDAO();
-		return emi.getJSON();
-	}
+		public ArrayList<EmisoraDTO> obtenerEmisoras() throws ParseException, org.json.simple.parser.ParseException {
+	        try {
+	            EmisoraDAO emisoraDAO = new EmisoraDAO();
+	            return emisoraDAO.getJSON(); // Obtener lista de emisoras desde el DAO
+	        } catch (IOException e) {
+	            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al obtener las emisoras.", null));
+	            return new ArrayList<>(); // Retornar lista vacía en caso de error
+	        }
+	    }
 
 }
