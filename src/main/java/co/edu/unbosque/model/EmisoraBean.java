@@ -1,20 +1,11 @@
 package co.edu.unbosque.model;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
-
-import org.primefaces.shaded.json.JSONObject;
-
-import co.edu.unbosque.dao.CancionDAO;
 import co.edu.unbosque.dao.EmisoraDAO;
-import co.edu.unbosque.dto.CancionDTO;
 import co.edu.unbosque.dto.EmisoraDTO;
 
 @ManagedBean
@@ -70,14 +61,16 @@ public class EmisoraBean {
 		this.resultado = resultado;
 	}
 
-	public void crearEmisora() throws IOException {
-		EmisoraDAO temp = new EmisoraDAO();
-		String isApproved = "";
+	public String crearEmisora() throws IOException {
+		new EmisoraDAO();
 		EmisoraDTO emisora = new EmisoraDTO(this.getNombreBanda(), this.getTipoEmisora(), this.getGeneroMusical());
 
-		this.resultado = temp.postJSON(emisora);
+		EmisoraDAO.postJSON(emisora);
 
 		CookiesBean.createCookieForEmisora(emisora);
+
+		return "gestioncanciones.xhtml";
+
 	}
 
 	public ArrayList<EmisoraDTO> mostrar() throws IOException, ParseException, org.json.simple.parser.ParseException {
