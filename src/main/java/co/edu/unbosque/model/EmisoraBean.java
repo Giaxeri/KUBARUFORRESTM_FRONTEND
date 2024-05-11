@@ -26,6 +26,18 @@ public class EmisoraBean {
 	private String generoMusical;
 	private int resultado;
 
+	public EmisoraBean() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public EmisoraBean(String nombreBanda, String tipoEmisora, String generoMusical, int resultado) {
+		super();
+		this.nombreBanda = nombreBanda;
+		this.tipoEmisora = tipoEmisora;
+		this.generoMusical = generoMusical;
+		this.resultado = resultado;
+	}
+
 	public String getNombreBanda() {
 		return nombreBanda;
 	}

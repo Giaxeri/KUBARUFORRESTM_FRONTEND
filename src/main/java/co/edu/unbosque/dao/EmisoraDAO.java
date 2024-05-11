@@ -25,7 +25,7 @@ public class EmisoraDAO {
 
 	public static ArrayList<EmisoraDTO> getJSON()
 			throws IOException, ParseException, org.json.simple.parser.ParseException {
-		url = new URL(sitio + "EmisoraDTO/listar");
+		url = new URL(sitio + "Emisora/listar");
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		http.setRequestMethod("GET");
 		http.setRequestProperty("Accept", "application/json");
@@ -59,7 +59,7 @@ public class EmisoraDAO {
 	}
 
 	public static int postJSON(EmisoraDTO emisora) throws IOException {
-		url = new URL(sitio + "emisora/guardar");
+		url = new URL(sitio + "Emisora/guardar");
 
 		HttpURLConnection http;
 		http = (HttpURLConnection) url.openConnection();
@@ -82,7 +82,7 @@ public class EmisoraDAO {
 	}
 
 	public static int updateEmisora(String nombreEmisora, EmisoraDTO nuevaEmisora) throws IOException {
-		url = new URL(sitio + "emisora/actualizar");
+		url = new URL(sitio + "Emisora/actualizar");
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -110,7 +110,7 @@ public class EmisoraDAO {
 	}
 
 	public static int deleteEmisora(String nombreEmisora) throws IOException {
-		url = new URL(sitio + "emisora/eliminar");
+		url = new URL(sitio + "Emisora/eliminar");
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
