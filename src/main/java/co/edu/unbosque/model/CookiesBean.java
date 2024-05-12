@@ -20,35 +20,24 @@ public class CookiesBean {
 		cookieNombreEmisora.setMaxAge(3600); // Una hora de duración
 		response.addCookie(cookieNombreEmisora);
 
-		Cookie cookieTipoEmisora = new Cookie("tipoEmisora", emisora.getTipoEmisora());
-		cookieTipoEmisora.setMaxAge(3600); // Una hora de duración
-		response.addCookie(cookieTipoEmisora);
-
-		Cookie cookieGeneroMusical = new Cookie("generoMusical", emisora.getGeneroMusical());
-		cookieGeneroMusical.setMaxAge(3600); // Una hora de duración
-		response.addCookie(cookieGeneroMusical);
-
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
-	public static EmisoraDTO getEmisoraFromCookies() {
+	public static String getEmisoraFromCookies() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
 		Cookie[] cookies = request.getCookies();
-		EmisoraDTO emisora = new EmisoraDTO();
+		String nombreEmisora = null;
 
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if ("nombreEmisora".equals(cookie.getName())) {
-					emisora.setNombreBanda(cookie.getValue());
-				} else if ("tipoEmisora".equals(cookie.getName())) {
-					emisora.setTipoEmisora(cookie.getValue());
-				} else if ("generoMusical".equals(cookie.getName())) {
-					emisora.setGeneroMusical(cookie.getValue());
+					nombreEmisora = cookie.getValue();
+					break; // No necesitamos seguir iterando si encontramos el nombre de la emisora
 				}
 			}
 		}
-		return emisora;
+		return nombreEmisora;
 	}
 
 	public static void deleteCookies() {
@@ -60,8 +49,7 @@ public class CookiesBean {
 
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if ("nombreEmisora".equals(cookie.getName()) || "tipoEmisora".equals(cookie.getName())
-						|| "generoMusical".equals(cookie.getName())) {
+				if ("nombreEmisora".equals(cookie.getName())) {
 					cookie.setValue(null);
 					cookie.setMaxAge(0); // Eliminar la cookie
 					cookie.setPath("/"); // Asegúrate de establecer el path adecuado

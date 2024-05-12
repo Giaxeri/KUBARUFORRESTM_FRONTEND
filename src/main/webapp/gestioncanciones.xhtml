@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -10,10 +9,6 @@
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;display=swap"
 	rel="stylesheet" />
 <style>
-#archivos-subidos h2, #lista-archivos li {
-	color: white;
-}
-
 .poppins-semibold {
 	margin: 0;
 	padding: 0;
@@ -40,7 +35,6 @@
 	border-radius: 5px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	/* Alinea el texto horizontalmente */
 }
 
 html {
@@ -91,7 +85,6 @@ a {
 	padding: 10px 20px;
 	transition: 0.5s;
 	border: 2px solid transparent;
-	/* Agrega un borde de 2px con color transparente */
 }
 
 a:hover {
@@ -125,8 +118,7 @@ a span {
 	padding: 10px 20px;
 	transition: 0.5s;
 	border: 2px solid transparent;
-	/* Agrega un borde de 2px con color transparente */
-	cursor: pointer; /* Cambia el cursor al pasar sobre el label */
+	cursor: pointer;
 }
 
 .custom-label:hover {
@@ -151,62 +143,29 @@ a span {
 	position: relative;
 	z-index: 1;
 }
-
-.uploaded-files {
-	width: 450px;
-	height: 780px;
-	position: fixed;
-	top: 50%;
-	right: 10%;
-	/* Ajusta el valor para determinar la distancia del borde derecho */
-	transform: translate(0, -50%);
-	background-color: #1e1f22;
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	z-index: 999; /* Asegura que esté por encima del contenido */
-	overflow-y: auto;
-	/* Añade un scroll vertical si el contenido excede la altura */
-}
-
-.upload-container {
-	position: fixed;
-	top: 50%;
-	right: 10%;
-	/* Ajusta el valor para determinar la distancia del borde derecho */
-	transform: translate(0, -50%);
-	z-index: 999; /* Asegura que esté por encima del contenido */
-}
 </style>
 <script>
 	function toggleCampoArchivo() {
 		var campoArchivo = document.getElementById("campo-archivo");
-		var archivosSubidos = document.getElementById("archivos-subidos");
-
 		if (campoArchivo.style.display === "none") {
 			campoArchivo.style.display = "block";
-			archivosSubidos.style.display = "block"; // Muestra la sección de archivos subidos
 		} else {
 			campoArchivo.style.display = "none";
-			archivosSubidos.style.display = "none"; // Oculta la sección de archivos subidos
 		}
 	}
 
 	function handleFileSelect(evt) {
-		var files = evt.target.files; // Obtiene la lista de archivos seleccionados
+		var files = evt.target.files;
 		var listaArchivos = document.getElementById('lista-archivos');
-		var nombreArtista = document.getElementById('nombre-artista').value; // Obtiene el nombre del artista
-		var nombreCancion = document.getElementById('nombre-cancion').value; // Obtiene el nombre de la canción
-		var generoMusical = document.getElementById('genero').value; // Obtiene el género musical seleccionado
+		var nombreArtista = document.getElementById('nombre-artista').value;
+		var nombreCancion = document.getElementById('nombre-cancion').value;
+		var generoMusical = document.getElementById('genero').value;
 
-		// Itera sobre los archivos seleccionados y agrega cada uno a la lista
 		for (var i = 0, f; f = files[i]; i++) {
 			var li = document.createElement('li');
 			li.textContent = nombreArtista + ' - ' + nombreCancion + ' - '
-					+ f.name + ' - ' + generoMusical; // Agrega el nombre del artista, de la canción, del archivo y del género al nombre del archivo
+					+ f.name + ' - ' + generoMusical;
 			listaArchivos.appendChild(li);
-			// Agrega un salto de línea después de cada archivo subido
 			listaArchivos.appendChild(document.createElement("br"));
 		}
 	}
@@ -221,36 +180,18 @@ a span {
 		<p:panel style="background-color: #27282c;">
 			<div class="container">
 
-				<br></br>
-				<a href="#" id="crear-btn" style="--color: green"
-					onclick="toggleCampoArchivo();"><span>Crear</span><i></i></a>
-				<br></br>
+				<br></br> <a href="#" id="crear-btn" style="--color: green"
+					onclick="toggleCampoArchivo();"><span>Crear</span><i></i></a> <br></br>
 
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<a href="#" style="--color: red"><span>Eliminar</span><i></i></a>
-				<br></br>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
+					href="#" style="--color: red"><span>Eliminar</span><i></i></a> <br></br>
 
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<a href="#" style="--color: blue"><span>Actualizar</span><i></i></a>
-				<br></br>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
+					href="#" style="--color: blue"><span>Actualizar</span><i></i></a> <br></br>
 
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<br></br>
-				<a href="index.xhtml" style="--color: orange"><span>Config. Emisora</span><i></i></a>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
+					href="index.xhtml" style="--color: orange"><span>Config.
+						Emisora</span><i></i></a>
 
 			</div>
 
@@ -258,20 +199,24 @@ a span {
 				<label for="nombre-artista" class="poppins-semibold"
 					style="color: white;">Nombre del Artista:</label>
 
-				<h:inputText id="nombre-artista" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.nombreArtista}"></h:inputText>
+				<h:inputText id="nombre-artista"
+					style="margin-bottom: 10px; width: 40%; padding: 5px;"
+					value="#{cancionBean.nombreArtista}"></h:inputText>
 
-				<br></br>
-				<br></br>
-				<label for="nombre-cancion" class="poppins-semibold"
-					style="color: white;">Nombre de la Canción:</label>
-				<h:inputText id="nombre-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.nombreCancion}"></h:inputText>
-				<br> </br>
-				<label for="url-cancion" class="poppins-semibold" style="color: white;">URL de la Canción:</label>
-				<h:inputText id="url-cancion" style="margin-bottom: 10px; width: 40%; padding: 5px;" value="#{cancionBean.rutaDelArchivo}"></h:inputText>
+				<br></br> <br></br> <label for="nombre-cancion"
+					class="poppins-semibold" style="color: white;">Nombre de la
+					Canción:</label>
+				<h:inputText id="nombre-cancion"
+					style="margin-bottom: 10px; width: 40%; padding: 5px;"
+					value="#{cancionBean.nombreCancion}"></h:inputText>
+				<br> </br> <label for="url-cancion" class="poppins-semibold"
+					style="color: white;">URL de la Canción:</label>
+				<h:inputText id="url-cancion"
+					style="margin-bottom: 10px; width: 200%; padding: 5px;"
+					value="#{cancionBean.rutaDelArchivo}"></h:inputText>
 
-				<br></br>
-				<br></br>
-				<label class="poppins-semibold" style="color: white;">Género Musical:</label>
+				<br></br> <br></br> <label class="poppins-semibold"
+					style="color: white;">Género Musical:</label>
 
 				<h:selectOneMenu id="genero" value="#{cancionBean.generoMusical}">
 					<f:selectItem itemLabel="Jazz" itemValue="Jazz" />
@@ -281,20 +226,9 @@ a span {
 					<f:selectItem itemLabel="Clásica" itemValue="Clásica" />
 				</h:selectOneMenu>
 
-				<br></br>
-				<br></br>
-				<a href="#" class="custom-label" style="--color: black;"
-					onclick="document.getElementById('file').click();"><span>Registrar</span><i></i></a>
-				<input type="file" id="file" accept=".mp3" style="display: none;"
-					onchange="handleFileSelect(event)" />
-			</div>
-
-			<div class="uploaded-files" id="archivos-subidos" style="display: none;">
-				<h2>Archivos Subidos</h2>
-				<br></br>
-				<ul id="lista-archivos">
-					<!-- Lista de archivos subidos -->
-				</ul>
+				<br></br> <br></br>
+				<h:commandButton value="Enviar Datos" style="--color: black;"
+					action="#{cancionBean.registrar}"></h:commandButton>
 			</div>
 
 		</p:panel>
