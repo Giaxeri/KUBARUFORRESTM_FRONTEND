@@ -34,7 +34,17 @@
 		</h:panelGrid>
 
 		<p:commandButton value="Registrar" action="#{cancionBean.actualizar}" />
-		<p:commandButton value="Registrar" action="#{cancionBean.actualizar}" />
+
+		<h3 style="margin-top: 0">Basic PickList</h3>
+		<p:pickList id="canciones" value="#{cancionBean.canciones}"
+			var="cancion" itemLabel="#{cancion.nombreCancion}"
+			itemValue="#{cancion}" />
+
+		<p:commandButton id="CancionesSumit" value="Agregar a lista"
+			update="cancionForm" style="margin-top:5px" />
+
 	</h:form>
+
+
 </h:body>
 </html>

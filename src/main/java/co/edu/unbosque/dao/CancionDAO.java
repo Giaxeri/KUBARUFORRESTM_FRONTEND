@@ -8,10 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.simple.JSONArray;
-import org.primefaces.shaded.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import co.edu.unbosque.dto.*;
 
 public class CancionDAO {
@@ -92,7 +93,7 @@ public class CancionDAO {
 
 			// JSON para eliminar por nombre de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreCancion", nombreCancion); // Nombre de la canción a eliminar
+			jsonRequest.put("nombreCancion", nombreCancion);
 
 			// Imprimir estado en la consola
 			System.out.println("Enviando solicitud de eliminación...");
@@ -112,9 +113,8 @@ public class CancionDAO {
 		}
 	}
 
-	public static List<CancionDTO> listarCanciones() throws IOException {
+	public static ArrayList<CancionDTO> listarCanciones() throws IOException, ParseException {
 		URL url = new URL(sitio + "Canciones/listar");
-
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
 			http.setRequestMethod("GET");
@@ -124,26 +124,27 @@ public class CancionDAO {
 			byte[] inp = respuesta.readAllBytes();
 			String json = new String(inp, StandardCharsets.UTF_8);
 
-			List<CancionDTO> canciones = parsearListaCanciones(json);
+			ArrayList<CancionDTO> canciones = parsingCanciones(json);
 			return canciones;
 		} finally {
 			http.disconnect();
 		}
 	}
 
-	private static List<CancionDTO> parsearListaCanciones(String json) {
-		List<CancionDTO> canciones = new ArrayList<>();
-		JSONArray jsonArray = new JSONArray();
+	public static ArrayList<CancionDTO> parsingCanciones(String json) throws ParseException {
+		JSONParser jsonParser = new JSONParser();
+		ArrayList<CancionDTO> canciones = new ArrayList<>();
+		JSONArray jsonArray = (JSONArray) jsonParser.parse(json);
 
-		for (int i = 0; i < ((CharSequence) jsonArray).length(); i++) {
-			JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+		for (Object obj : jsonArray) {
+			JSONObject jsonObject = (JSONObject) obj;
 			CancionDTO cancion = new CancionDTO();
 
-			cancion.setNombreCancion(jsonObject.getString("nombreCancion"));
-			cancion.setNombreArtista(jsonObject.getString("nombreArtista"));
-			cancion.setGeneroMusical(jsonObject.getString("generoMusical"));
-			cancion.setRutaDelArchivo(jsonObject.getString("rutaDelArchivo"));
-			cancion.setNombreEmisora(jsonObject.getString("nombreEmisora"));
+			cancion.setNombreCancion((String) jsonObject.get("nombreCancion"));
+			cancion.setNombreArtista((String) jsonObject.get("nombreArtista"));
+			cancion.setGeneroMusical((String) jsonObject.get("generoMusical"));
+			cancion.setRutaDelArchivo((String) jsonObject.get("rutaDelArchivo"));
+			cancion.setNombreEmisora((String) jsonObject.get("nombreEmisora"));
 
 			canciones.add(cancion);
 		}

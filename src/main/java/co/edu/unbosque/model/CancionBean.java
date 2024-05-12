@@ -1,12 +1,6 @@
 package co.edu.unbosque.model;
 
 import java.io.IOException;
-
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +8,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.shaded.json.JSONObject;
+import org.json.simple.parser.ParseException;
+import org.primefaces.model.DualListModel;
 
 import co.edu.unbosque.dao.CancionDAO;
 import co.edu.unbosque.dto.CancionDTO;
-import co.edu.unbosque.dto.EmisoraDTO;
 
 @ManagedBean
 public class CancionBean {
@@ -28,8 +22,16 @@ public class CancionBean {
 	private String rutaDelArchivo;
 	private String nombreEmisora;
 
-	public CancionBean() {
-		// TODO Auto-generated constructor stub
+	private DualListModel<CancionDTO> canciones;
+
+	public CancionBean() throws ParseException {
+
+		List<CancionDTO> cancionesSource = new ArrayList<CancionDTO>();
+		List<CancionDTO> cancionesTarget = new ArrayList<CancionDTO>();
+
+		cancionesSource = obtenerCanciones();
+
+		canciones = new DualListModel<CancionDTO>(cancionesSource, cancionesTarget);
 	}
 
 	public CancionBean(String nombreCancion, String nombreArtista, String generoMusical, String rutaDelArchivo,
@@ -80,6 +82,14 @@ public class CancionBean {
 
 	public void setNombreEmisora(String nombreEmisora) {
 		this.nombreEmisora = nombreEmisora;
+	}
+
+	public DualListModel<CancionDTO> getCanciones() {
+		return canciones;
+	}
+
+	public void setCanciones(DualListModel<CancionDTO> canciones) {
+		this.canciones = canciones;
 	}
 
 	public String registrar() throws IOException {
@@ -138,11 +148,12 @@ public class CancionBean {
 		}
 	}
 
-	public ArrayList<CancionDTO> obtenerCanciones() {
+	public ArrayList<CancionDTO> obtenerCanciones() throws ParseException {
 		try {
 			CancionDAO cancionDAO = new CancionDAO();
-			List<CancionDTO> temp = CancionDAO.listarCanciones();
-			return (ArrayList<CancionDTO>) temp;
+			ArrayList<CancionDTO> temp = new ArrayList<CancionDTO>();
+			temp = cancionDAO.listarCanciones();
+			return temp;
 		} catch (IOException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al obtener las canciones.", null));
