@@ -7,20 +7,20 @@ public class CancionDTO {
 	private String nombreArtista;
 	private String generoMusical;
 	private String rutaDelArchivo; // Ruta o referencia al archivo MP3
-	private EmisoraDTO emisora;
+	private String nombreEmisora;
 
 	public CancionDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public CancionDTO(String nombreCancion, String nombreArtista, String generoMusical, String rutaDelArchivo,
-			EmisoraDTO emisora) {
+			String nombreEmisora) {
 		super();
 		this.nombreCancion = nombreCancion;
 		this.nombreArtista = nombreArtista;
 		this.generoMusical = generoMusical;
 		this.rutaDelArchivo = rutaDelArchivo;
-		this.emisora = emisora;
+		this.nombreEmisora = nombreEmisora;
 	}
 
 	public String getNombreCancion() {
@@ -55,12 +55,12 @@ public class CancionDTO {
 		this.rutaDelArchivo = rutaDelArchivo;
 	}
 
-	public EmisoraDTO getEmisora() {
-		return emisora;
+	public String getNombreEmisora() {
+		return nombreEmisora;
 	}
 
-	public void setEmisora(EmisoraDTO emisora) {
-		this.emisora = emisora;
+	public void setNombreEmisora(String nombreEmisora) {
+		this.nombreEmisora = nombreEmisora;
 	}
 
 }

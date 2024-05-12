@@ -19,7 +19,7 @@ public class CancionDAO {
 	private static final String sitio = "http://localhost:8088/";
 
 	public static int crearCancion(CancionDTO cancion) throws IOException {
-		URL url = new URL(sitio + "canciones/guardar");
+		URL url = new URL(sitio + "Canciones/guardar");
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -33,7 +33,7 @@ public class CancionDAO {
 			jsonRequest.put("nombreArtista", cancion.getNombreArtista());
 			jsonRequest.put("generoMusical", cancion.getGeneroMusical());
 			jsonRequest.put("rutaDelArchivo", cancion.getRutaDelArchivo());
-			jsonRequest.put("emisora", cancion.getEmisora());
+			jsonRequest.put("nombreEmisora", cancion.getNombreEmisora());
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
@@ -47,7 +47,7 @@ public class CancionDAO {
 	}
 
 	public static int actualizarCancion(String nombreCancion, CancionDTO nuevaCancion) throws IOException {
-		URL url = new URL(sitio + "canciones/actualizar");
+		URL url = new URL(sitio + "Canciones/actualizar/" + nombreCancion);
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -61,7 +61,7 @@ public class CancionDAO {
 			jsonRequest.put("nombreArtista", nuevaCancion.getNombreArtista());
 			jsonRequest.put("generoMusical", nuevaCancion.getGeneroMusical());
 			jsonRequest.put("rutaDelArchivo", nuevaCancion.getRutaDelArchivo());
-			jsonRequest.put("emisora", nuevaCancion.getEmisora());
+			jsonRequest.put("emisora", nuevaCancion.getNombreEmisora());
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
@@ -75,7 +75,7 @@ public class CancionDAO {
 	}
 
 	public static int eliminarCancion(String nombreCancion) throws IOException {
-		URL url = new URL(sitio + "canciones/eliminar");
+		URL url = new URL(sitio + "Canciones/eliminar/" + nombreCancion);
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -85,7 +85,7 @@ public class CancionDAO {
 
 			// JSON para eliminar por nombre de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombre", nombreCancion); // Nombre de la canción a eliminar
+			jsonRequest.put("nombreCancion", nombreCancion); // Nombre de la canción a eliminar
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
@@ -96,11 +96,10 @@ public class CancionDAO {
 		} finally {
 			http.disconnect();
 		}
-
 	}
 
 	public static List<CancionDTO> listarCanciones() throws IOException {
-		URL url = new URL(sitio + "canciones/listar");
+		URL url = new URL(sitio + "Canciones/listar");
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -130,15 +129,7 @@ public class CancionDAO {
 			cancion.setNombreArtista(jsonObject.getString("nombreArtista"));
 			cancion.setGeneroMusical(jsonObject.getString("generoMusical"));
 			cancion.setRutaDelArchivo(jsonObject.getString("rutaDelArchivo"));
-
-			// Parsear el objeto EmisoraDTO
-			JSONObject jsonEmisora = jsonObject.getJSONObject("emisora");
-			EmisoraDTO emisoraDTO = new EmisoraDTO();
-			emisoraDTO.setNombreBanda(jsonEmisora.getString("nombreEmisora"));
-			emisoraDTO.setTipoEmisora(jsonEmisora.getString("modoTransmicion"));
-			emisoraDTO.setGeneroMusical(jsonEmisora.getString("tipoMusica"));
-
-			cancion.setEmisora(emisoraDTO);
+			cancion.setNombreEmisora(jsonObject.getString("nombreEmisora"));
 
 			canciones.add(cancion);
 		}
