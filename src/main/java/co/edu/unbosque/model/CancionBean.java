@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,7 +19,6 @@ import org.primefaces.shaded.json.JSONObject;
 import co.edu.unbosque.dao.CancionDAO;
 import co.edu.unbosque.dto.CancionDTO;
 import co.edu.unbosque.dto.EmisoraDTO;
-
 
 @ManagedBean
 public class CancionBean {
@@ -137,16 +137,17 @@ public class CancionBean {
 			return null;
 		}
 	}
-	
-	 public ArrayList<CancionDTO> obtenerCanciones() {
-	        try {
-	            CancionDAO cancionDAO = new CancionDAO();
-	            return cancionDAO.getJSON(); 
-	        } catch (IOException | ParseException | org.json.simple.parser.ParseException e) {
-	            FacesContext.getCurrentInstance().addMessage(null,
-	                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al obtener las canciones.", null));
-	            return new ArrayList<>(); 
-	        }
-	    }
+
+	public ArrayList<CancionDTO> obtenerCanciones() {
+		try {
+			CancionDAO cancionDAO = new CancionDAO();
+			List<CancionDTO> temp = CancionDAO.listarCanciones();
+			return (ArrayList<CancionDTO>) temp;
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al obtener las canciones.", null));
+			return new ArrayList<>();
+		}
+	}
 
 }

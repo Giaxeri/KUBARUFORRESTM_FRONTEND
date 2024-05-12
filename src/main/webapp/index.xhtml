@@ -90,12 +90,12 @@ html {
 			style="background-color: #333333;">
 		<div class="container">
 			<h3>¡Bienvenido!</h3>
-			<h3>Ajustes de la Emisora</h3>
+			<h3>Ajustes de la Emisora (Si ya ha creado una, ingrese el
+				nombre)</h3>
 			<br /> <label>Nombre de la Banda: </label>
 			<h:inputText value="#{emisoraBean.nombreBanda}"
 				onkeyup="mostrarBoton()"></h:inputText>
-			<br></br>
-			<br></br> <label>Tipo de Emisora: </label>
+			<br></br> <br></br> <label>Tipo de Emisora: </label>
 			<p:selectOneMenu value="#{emisoraBean.tipoEmisora}">
 				<f:selectItem itemLabel="AM" itemValue="AM" />
 				<f:selectItem itemLabel="FM" itemValue="FM" />
@@ -116,8 +116,8 @@ html {
 				<h:commandButton action="#{emisoraBean.crearEmisora}"
 					value="Registrar" />
 			</div>
-			<br />	 <label class="letrapequena">Página
-				Desarollada por KubaruSas ©</label>
+			<br /> <label class="letrapequena">Página Desarollada por
+				KubaruSas ©</label>
 		</div>
 		</panel>
 	</h:form>
