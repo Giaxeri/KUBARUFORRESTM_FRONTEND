@@ -57,17 +57,24 @@ public class CancionDAO {
 
 			// Construcción del objeto JSON para la actualización de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreCancion", nombreCancion); // Nombre de la canción a actualizar
+			jsonRequest.put("nombreCancion", nombreCancion);
 			jsonRequest.put("nombreArtista", nuevaCancion.getNombreArtista());
 			jsonRequest.put("generoMusical", nuevaCancion.getGeneroMusical());
 			jsonRequest.put("rutaDelArchivo", nuevaCancion.getRutaDelArchivo());
 			jsonRequest.put("emisora", nuevaCancion.getNombreEmisora());
+
+			// Imprimir estado en la consola
+			System.out.println("Enviando solicitud de actualización...");
 
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
 			outputStream.flush();
 
 			int respuesta = http.getResponseCode();
+
+			// Imprimir estado en la consola
+			System.out.println("Respuesta del servidor: " + respuesta);
+
 			return respuesta;
 		} finally {
 			http.disconnect();
@@ -87,11 +94,18 @@ public class CancionDAO {
 			JSONObject jsonRequest = new JSONObject();
 			jsonRequest.put("nombreCancion", nombreCancion); // Nombre de la canción a eliminar
 
+			// Imprimir estado en la consola
+			System.out.println("Enviando solicitud de eliminación...");
+
 			OutputStream outputStream = http.getOutputStream();
 			outputStream.write(jsonRequest.toString().getBytes(StandardCharsets.UTF_8));
 			outputStream.flush();
 
 			int respuesta = http.getResponseCode();
+
+			// Imprimir estado en la consola
+			System.out.println("Respuesta del servidor: " + respuesta);
+
 			return respuesta;
 		} finally {
 			http.disconnect();

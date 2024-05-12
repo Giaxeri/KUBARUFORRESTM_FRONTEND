@@ -1,62 +1,46 @@
 package co.edu.unbosque.model;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.edu.unbosque.dto.EmisoraDTO;
 
 @ManagedBean
 public class CookiesBean {
 
-	public static void createCookieForEmisora(EmisoraDTO emisora) {
+	public static void createSessionForEmisora(EmisoraDTO emisora) {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpSession session = (HttpSession) externalContext.getSession(true);
 
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-				.getResponse();
+		session.setAttribute("nombreEmisora", emisora.getNombreBanda());
 
-		Cookie cookieNombreEmisora = new Cookie("nombreEmisora", emisora.getNombreBanda());
-		cookieNombreEmisora.setMaxAge(3600); // Una hora de duración
-		response.addCookie(cookieNombreEmisora);
-
-		FacesContext.getCurrentInstance().responseComplete();
+		facesContext.responseComplete();
 	}
 
-	public static String getEmisoraFromCookies() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		Cookie[] cookies = request.getCookies();
-		String nombreEmisora = null;
+	public static String getEmisoraFromSession() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpSession session = (HttpSession) externalContext.getSession(false);
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("nombreEmisora".equals(cookie.getName())) {
-					nombreEmisora = cookie.getValue();
-					break; // No necesitamos seguir iterando si encontramos el nombre de la emisora
-				}
-			}
+		if (session != null) {
+			return (String) session.getAttribute("nombreEmisora");
+		} else {
+			return null;
 		}
-		return nombreEmisora;
 	}
 
-	public static void deleteCookies() {
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-				.getResponse();
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		Cookie[] cookies = request.getCookies();
+	public static void deleteSession() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpSession session = (HttpSession) externalContext.getSession(false);
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("nombreEmisora".equals(cookie.getName())) {
-					cookie.setValue(null);
-					cookie.setMaxAge(0); // Eliminar la cookie
-					cookie.setPath("/"); // Asegúrate de establecer el path adecuado
-					response.addCookie(cookie);
-				}
-			}
+		if (session != null) {
+			session.invalidate();
 		}
-		FacesContext.getCurrentInstance().responseComplete();
+
+		facesContext.responseComplete();
 	}
 }
