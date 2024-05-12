@@ -1,103 +1,134 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"> 
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Inicio Emisora</title>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Inicio Emisora</title>
 
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;display=swap" rel="stylesheet" />
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;display=swap"
+	rel="stylesheet" />
 
-	<style>
-		.topbar-container {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			background: #1e1f22;
-			height: 50px;
-		}
+<style>
+.topbar-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #1e1f22;
+	height: 50px;
+}
 
-		html {
-			background-color: #2f2f2f;
-			margin: 0;
-			padding: 0;
-		}
-		.container {
-			font-family: "Poppins", sans-serif;
-			font-weight: normal; /* Cambiado a 'normal' */
-			font-style: normal;
-			color: white;
-			width: 1400px;
-			height: 700px;
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #1e1f22;
-			border-radius: 5px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			text-align: center; /* Alinea el texto horizontalmente */
-			display: flex; /* Usa un diseño flexible */
-			flex-wrap: wrap; /* Permite que los contenedores internos se envuelvan en filas */
-		}
-		.subcontainer {
-			width: 40%; /* Cada contenedor ocupa el 50% del ancho del contenedor principal */
-			height: 40%; /* Cada contenedor ocupa el 50% del alto del contenedor principal */
-			background-color: #3e3f41; /* Color de fondo diferente para distinguir */
-			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Sombra */
-			position: absolute; /* Posición absoluta para ubicarlos en las esquinas */
-		}
-		.top-right {
-			top: 5%;
-			right: 5%;
-		}
-		.top-left {
-			top: 5%;
-			left: 5%;
-		}
-		.bottom-mid {
-			bottom:5%;
-			right:30%;
-		}
+html {
+	background-color: #2f2f2f;
+	margin: 0;
+	padding: 0;
+}
 
-		/* Estilo de la etiqueta "label" para hacer el texto más grande */
-		.top-left label {
-			font-size: 24px; /* Cambia el tamaño de la fuente según sea necesario */
-		}
-		
-		
-			.top-right label {
-			font-size: 24px; /* Cambia el tamaño de la fuente según sea necesario */
-		}
-		
-		.bottom-mid label {
-		
-		font-size: 24px;
-		}
-		
-	</style>
-</h:head> 
-<h:body>
+.container {
+	font-family: "Poppins", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	color: white;
+	width: 1400px;
+	height: 700px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #1e1f22;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.subcontainer {
+	width: 40%;
+	height: 40%;
+	background-color: #3e3f41;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	position: absolute;
+}
+
+.top-right {
+	top: 5%;
+	right: 5%;
+}
+
+.top-left {
+	top: 5%;
+	left: 5%;
+}
+
+.bottom-mid {
+	bottom: 5%;
+	right: 30%;
+}
+
+.top-left label {
+	font-size: 24px;
+}
+
+.top-right label {
+	font-size: 24px;
+}
+
+.bottom-mid label {
+	font-size: 24px;
+}
+</style>
+</head>
+<body>
 	<div class="topbar-container"></div>
 	<div class="container">
 		<div class="subcontainer top-right">
-		<br></br><label>Canción: </label>
+			<br />
+			<label>Canción: </label>
 		</div>
 		<div class="subcontainer top-left">
-			<br></br><label>Artista:                </label>
+			<br />
+			<label>Artista: </label>
 		</div>
 		<div class="subcontainer bottom-mid">
-		<br></br> <label>Reproductor: </label>
-		</div>
-		
-	</div>
-</h:body>  
-</html>
+			<br />
+			<label>Reproductor: </label> <br />
+			<br />
+			<div class="audio-controls">
+				<input type="text" id="audioUrl" class="audio-url-input"
+					placeholder="Inserta el enlace MP3" />
+				<button onclick="actualizarAudio()">Reproducir</button>
+			</div>
+			<br />
+			<br />
+			<audio controls="controls" id="reproductorAudio">
+				<source src="" type="audio/mp3" />
+				Tu navegador no soporta el elemento de audio. Por favor, usa un
+				navegador actualizado.
+			</audio>
 
+		</div>
+	</div>
+	<script>
+		function actualizarAudio() {
+			const audioUrl = document.getElementById('audioUrl').value;
+			const audioPlayer = document.getElementById('reproductorAudio');
+
+			// Verificar si se proporcionó una URL válida
+			if (audioUrl.trim() !== '') {
+				// Actualizar la fuente del audio
+				audioPlayer.src = audioUrl;
+				// Cargar y reproducir el nuevo audio
+				audioPlayer.load();
+				audioPlayer.play();
+			} else {
+				// Si no se proporciona una URL válida, detener la reproducción
+				audioPlayer.pause();
+			}
+		}
+	</script>
+</body>
+</html>
