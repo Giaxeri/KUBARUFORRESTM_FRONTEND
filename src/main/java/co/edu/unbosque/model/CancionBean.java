@@ -78,20 +78,6 @@ public class CancionBean {
 		this.nombreEmisora = nombreEmisora;
 	}
 
-	public void eliminarCancion() {
-		try {
-			CancionDAO cancion = new CancionDAO();
-			cancion.eliminarCancion(this.nombreCancion);
-			// Mensaje de éxito
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancion eliminada correctamente.", null));
-		} catch (Exception e) {
-			// Manejo del error
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Error al eliminar la canción: " + e.getMessage(), null));
-		}
-	}
-
 	public String registrar() throws IOException {
 		try {
 			CancionDAO temp = new CancionDAO();
@@ -105,8 +91,8 @@ public class CancionBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancion registrada correctamente.", null));
 
 			// Redirección a gestioncanciones.xhtml
-			// return "gestioncanciones?faces-redirect=true";
-			return "prueba_cancion?faces-redirect=true";
+			return "gestioncanciones?faces-redirect=true";
+			// return "prueba_cancion?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar la cancion.", null));
@@ -114,7 +100,7 @@ public class CancionBean {
 		}
 	}
 
-	public void actualizar() {
+	public String actualizar() {
 		try {
 			CancionDAO temp = new CancionDAO();
 			CancionDTO cancion = new CancionDTO(this.getNombreCancion(), this.getNombreArtista(),
@@ -123,10 +109,28 @@ public class CancionBean {
 			// Mensaje de éxito
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancion actualizada correctamente.", null));
+			return "gestioncanciones?faces-redirect=true";
 		} catch (Exception e) {
 			// Manejo del error
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Error al actualizar la canción: " + e.getMessage(), null));
+			return null;
+		}
+	}
+
+	public String eliminarCancion() {
+		try {
+			CancionDAO cancion = new CancionDAO();
+			cancion.eliminarCancion(this.nombreCancion);
+			// Mensaje de éxito
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancion eliminada correctamente.", null));
+			return "gestioncanciones?faces-redirect=true";
+		} catch (Exception e) {
+			// Manejo del error
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error al eliminar la canción: " + e.getMessage(), null));
+			return null;
 		}
 	}
 

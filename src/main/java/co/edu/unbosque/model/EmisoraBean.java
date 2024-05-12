@@ -62,8 +62,8 @@ public class EmisoraBean {
 
 			CookiesBean.createSessionForEmisora(emisora);
 
-			// return "gestioncanciones?faces-redirect=true";
-			return "prueba_cancion?faces-redirect=true";
+			return "gestioncanciones?faces-redirect=true";
+			// return "prueba_cancion?faces-redirect=true";
 		} catch (IOException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar la emisora.", null));

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -147,27 +148,66 @@ a span {
 <script>
 	function toggleCampoArchivo() {
 		var campoArchivo = document.getElementById("campo-archivo");
-		if (campoArchivo.style.display === "none") {
+		var eliminarCancionDiv = document.getElementById("eliminar-cancion");
+		var actualizarCancionDiv = document
+				.getElementById("actualizar-cancion");
+
+		if (campoArchivo.style.display === "none"
+				|| campoArchivo.style.display === "") {
 			campoArchivo.style.display = "block";
+			ocultarEliminar();
+			ocultarActualizar();
 		} else {
 			campoArchivo.style.display = "none";
 		}
 	}
 
-	function handleFileSelect(evt) {
-		var files = evt.target.files;
-		var listaArchivos = document.getElementById('lista-archivos');
-		var nombreArtista = document.getElementById('nombre-artista').value;
-		var nombreCancion = document.getElementById('nombre-cancion').value;
-		var generoMusical = document.getElementById('genero').value;
+	function toggleEliminar() {
+		var eliminarCancionDiv = document.getElementById("eliminar-cancion");
+		var campoArchivo = document.getElementById("campo-archivo");
+		var actualizarCancionDiv = document
+				.getElementById("actualizar-cancion");
 
-		for (var i = 0, f; f = files[i]; i++) {
-			var li = document.createElement('li');
-			li.textContent = nombreArtista + ' - ' + nombreCancion + ' - '
-					+ f.name + ' - ' + generoMusical;
-			listaArchivos.appendChild(li);
-			listaArchivos.appendChild(document.createElement("br"));
+		if (eliminarCancionDiv.style.display === "none"
+				|| eliminarCancionDiv.style.display === "") {
+			eliminarCancionDiv.style.display = "block";
+			ocultarCampoArchivo();
+			ocultarActualizar();
+		} else {
+			eliminarCancionDiv.style.display = "none";
 		}
+	}
+
+	function toggleActualizar() {
+		var actualizarCancionDiv = document
+				.getElementById("actualizar-cancion");
+		var campoArchivo = document.getElementById("campo-archivo");
+		var eliminarCancionDiv = document.getElementById("eliminar-cancion");
+
+		if (actualizarCancionDiv.style.display === "none"
+				|| actualizarCancionDiv.style.display === "") {
+			actualizarCancionDiv.style.display = "block";
+			ocultarCampoArchivo();
+			ocultarEliminar();
+		} else {
+			actualizarCancionDiv.style.display = "none";
+		}
+	}
+
+	function ocultarCampoArchivo() {
+		var campoArchivo = document.getElementById("campo-archivo");
+		campoArchivo.style.display = "none";
+	}
+
+	function ocultarEliminar() {
+		var eliminarCancionDiv = document.getElementById("eliminar-cancion");
+		eliminarCancionDiv.style.display = "none";
+	}
+
+	function ocultarActualizar() {
+		var actualizarCancionDiv = document
+				.getElementById("actualizar-cancion");
+		actualizarCancionDiv.style.display = "none";
 	}
 </script>
 </head>
@@ -179,18 +219,15 @@ a span {
 	<h:form>
 		<p:panel style="background-color: #27282c;">
 			<div class="container">
-
 				<br></br> <a href="#" id="crear-btn" style="--color: green"
 					onclick="toggleCampoArchivo();"><span>Crear</span><i></i></a> <br></br>
 
 				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
-					href="#" style="--color: red"><span>Eliminar</span><i></i></a> <br></br>
-
-				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
-					href="#" style="--color: blue"><span>Actualizar</span><i></i></a> <br></br>
-
-				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
-					href="index.xhtml" style="--color: orange"><span>Config.
+					href="#" style="--color: red" onclick="toggleEliminar();"><span>Eliminar</span><i></i></a>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+				<a href="#" style="--color: blue" onclick="toggleActualizar();"><span>Actualizar</span><i></i></a>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+				<a href="index.xhtml" style="--color: orange"><span>Config.
 						Emisora</span><i></i></a>
 
 			</div>
@@ -217,7 +254,6 @@ a span {
 
 				<br></br> <br></br> <label class="poppins-semibold"
 					style="color: white;">Género Musical:</label>
-
 				<h:selectOneMenu id="genero" value="#{cancionBean.generoMusical}">
 					<f:selectItem itemLabel="Jazz" itemValue="Jazz" />
 					<f:selectItem itemLabel="Pop" itemValue="Pop" />
@@ -230,8 +266,68 @@ a span {
 				<h:commandButton value="Enviar Datos" style="--color: black;"
 					action="#{cancionBean.registrar}"></h:commandButton>
 			</div>
-
 		</p:panel>
 	</h:form>
+
+	<!-- Formulario para la sección "Eliminar" -->
+	<h:form id="formEliminar">
+		<p:panel style="background-color: #27282c;">
+			<div id="eliminar-cancion" style="display: none;">
+				<label for="nombre-cancion-eliminar" class="poppins-semibold"
+					style="color: white;">Nombre de la Canción:</label>
+				<h:inputText id="nombre-cancion-eliminar"
+					style="margin-bottom: 10px; width: 70%; padding: 5px;"
+					value="#{cancionBean.nombreCancion}"></h:inputText>
+
+				<br></br>
+				<h:commandButton value="Eliminar Canción" style="--color: black;"
+					action="#{cancionBean.eliminarCancion}"></h:commandButton>
+			</div>
+		</p:panel>
+	</h:form>
+
+	<!-- Formulario para la sección "Actualizar" -->
+	<h:form id="formActualizar">
+		<p:panel style="background-color: #27282c;">
+			<div id="actualizar-cancion" style="display: none;">
+				<label for="nombre-cancion-actualizar" class="poppins-semibold"
+					style="color: white;">Nombre de la Canción:</label>
+				<h:inputText id="nombre-cancion-actualizar"
+					style="margin-bottom: 10px; width: 70%; padding: 5px;"
+					value="#{cancionBean.nombreCancion}"></h:inputText>
+
+				<br></br> <label for="nombre-artista-actualizar"
+					class="poppins-semibold" style="color: white;">Nombre del
+					Artista:</label>
+				<h:inputText id="nombre-artista-actualizar"
+					style="margin-bottom: 10px; width: 40%; padding: 5px;"
+					value="#{cancionBean.nombreArtista}"></h:inputText>
+
+				<br></br> <label for="genero-actualizar" class="poppins-semibold"
+					style="color: white;">Género Musical:</label>
+				<h:selectOneMenu id="genero-actualizar"
+					value="#{cancionBean.generoMusical}">
+					<f:selectItem itemLabel="Jazz" itemValue="Jazz" />
+					<f:selectItem itemLabel="Pop" itemValue="Pop" />
+					<f:selectItem itemLabel="Rock" itemValue="Rock" />
+					<f:selectItem itemLabel="Latina" itemValue="Latina" />
+					<f:selectItem itemLabel="Clásica" itemValue="Clásica" />
+				</h:selectOneMenu>
+
+				<br></br> <label for="url-cancion-actualizar"
+					class="poppins-semibold" style="color: white;">URL de la
+					Canción:</label>
+				<h:inputText id="url-cancion-actualizar"
+					style="margin-bottom: 10px; width: 200%; padding: 5px;"
+					value="#{cancionBean.rutaDelArchivo}"></h:inputText>
+
+				<br></br>
+				<h:commandButton value="Actualizar Canción" style="--color: black;"
+					action="#{cancionBean.actualizar}"></h:commandButton>
+			</div>
+		</p:panel>
+	</h:form>
+
+	<!-- Otros elementos de la página -->
 </body>
 </html>
