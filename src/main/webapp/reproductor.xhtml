@@ -1,118 +1,121 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Inicio Emisora</title>
-
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;display=swap"
-	rel="stylesheet" />
-
-<style>
-.topbar-container {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	background: #1e1f22;
-	height: 50px;
-}
-
-html {
-	background-color: #2f2f2f;
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Reproductor de Audio</title>
+	<style>
+body {
+	font-family: Arial, sans-serif;
+	background: rgb(164, 52, 161);
+	background: linear-gradient(90deg, rgba(164, 52, 161, 1) 0%,
+		rgba(0, 0, 0, 1) 50%, rgba(164, 52, 161, 1) 100%);
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: white;
 	margin: 0;
 	padding: 0;
-}
-
-.container {
-	font-family: "Poppins", sans-serif;
-	font-weight: normal;
-	font-style: normal;
-	color: white;
-	width: 1400px;
-	height: 700px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	margin: 0 auto;
-	padding: 20px;
-	background-color: #1e1f22;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
 	display: flex;
-	flex-wrap: wrap;
+	justify-content: center;
+	background: #27282c;
 }
 
-.subcontainer {
-	width: 40%;
-	height: 40%;
-	background-color: #3e3f41;
+}
+.container {
+	display: flex;
+	width: 80%;
+	margin-top: 20px;
+}
+
+.left-column {
+	flex: 1;
+	padding: 20px;
+}
+
+.right-column {
+	flex: 1;
+	padding: 20px;
+	border: 1px solid #ccc;
 	border-radius: 5px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	position: absolute;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+	text-align: center;
 }
 
-.top-right {
-	top: 5%;
-	right: 5%;
+h5 {
+	margin-top: 0;
 }
 
-.top-left {
-	top: 5%;
-	left: 5%;
+.audio-controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
 }
 
-.bottom-mid {
-	bottom: 5%;
-	right: 30%;
+.audio-url-input {
+	width: 60%;
+	padding: 10px;
+	font-size: 14px;
 }
 
-.top-left label {
-	font-size: 24px;
+.play-button {
+	margin-left: 10px;
+	font-size: 16px;
 }
 
-.top-right label {
-	font-size: 24px;
+a {
+	color: #c1b575;
+	text-decoration: none;
 }
 
-.bottom-mid label {
-	font-size: 24px;
+a:hover {
+	text-decoration: underline;
 }
 </style>
-</head>
-<body>
-	<div class="topbar-container"></div>
+</h:head>
+<h:body>
 	<div class="container">
-		<div class="subcontainer top-right">
-			<br />
-			<label>Canción: </label>
+		<div class="left-column">
+			<h3>Listado de Canciones</h3>
+			<ul id="cancionesList">
+				<ui:repeat value="#{cancionBean.obtenerCanciones()}" var="cancion">
+					<li><a href="#"
+						onclick="seleccionarCancion('#{cancion.rutaDelArchivo}')">#{cancion.nombreCancion}</a>
+					</li>
+				</ui:repeat>
+			</ul>
 		</div>
-		<div class="subcontainer top-left">
-			<br />
-			<label>Artista: </label>
-		</div>
-		<div class="subcontainer bottom-mid">
-			<br />
-			<label>Reproductor: </label> <br />
-			<br />
-			<div class="audio-controls">
-				<input type="text" id="audioUrl" class="audio-url-input"
-					placeholder="Inserta el enlace MP3" />
-				<button onclick="actualizarAudio()">Reproducir</button>
+		<div class="right-column">
+			<div class="card">
+				<h5>Reproductor de Audio</h5>
+				<div class="audio-controls">
+					<p:inputText id="audioUrl" styleClass="audio-url-input"
+						placeholder="Inserta el enlace MP3" />
+					<p:commandButton value="Reproducir" icon="pi pi-play"
+						styleClass="play-button" onclick="actualizarAudio()" />
+				</div>
+				<div>
+					<audio id="reproductorAudio" controls="controls">
+						<source src="" type="audio/mp3" />
+						Tu navegador no soporta el elemento de audio. Por favor, usa un
+						navegador actualizado.
+					</audio>
+				</div>
+				<div style="margin-top: 20px;">
+					<p:button value="Volver" outcome="gestioncanciones.xhtml" />
+				</div>
 			</div>
-			<br />
-			<br />
-			<audio controls="controls" id="reproductorAudio">
-				<source src="" type="audio/mp3" />
-				Tu navegador no soporta el elemento de audio. Por favor, usa un
-				navegador actualizado.
-			</audio>
-
 		</div>
 	</div>
+
 	<script>
+		function seleccionarCancion(url) {
+			document.getElementById('audioUrl').value = url;
+		}
+
 		function actualizarAudio() {
 			const audioUrl = document.getElementById('audioUrl').value;
 			const audioPlayer = document.getElementById('reproductorAudio');
@@ -130,5 +133,5 @@ html {
 			}
 		}
 	</script>
-</body>
+</h:body>
 </html>

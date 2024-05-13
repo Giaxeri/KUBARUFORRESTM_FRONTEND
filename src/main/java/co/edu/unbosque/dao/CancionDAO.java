@@ -19,6 +19,14 @@ public class CancionDAO {
 
 	private static final String sitio = "http://localhost:8088/";
 
+	public static String replaceSpacesWithPlus(String text) {
+		return text.replaceAll(" ", "+");
+	}
+
+	public static String replacePlusWithSpaces(String text) {
+		return text.replaceAll("\\+", " ");
+	}
+
 	public static int crearCancion(CancionDTO cancion) throws IOException {
 		URL url = new URL(sitio + "Canciones/guardar");
 
@@ -30,7 +38,7 @@ public class CancionDAO {
 
 			// Construcción del objeto JSON para la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreCancion", cancion.getNombreCancion());
+			jsonRequest.put("nombreCancion", replaceSpacesWithPlus(cancion.getNombreCancion()));
 			jsonRequest.put("nombreArtista", cancion.getNombreArtista());
 			jsonRequest.put("generoMusical", cancion.getGeneroMusical());
 			jsonRequest.put("rutaDelArchivo", cancion.getRutaDelArchivo());
@@ -48,7 +56,7 @@ public class CancionDAO {
 	}
 
 	public static int actualizarCancion(String nombreCancion, CancionDTO nuevaCancion) throws IOException {
-		URL url = new URL(sitio + "Canciones/actualizar/" + nombreCancion);
+		URL url = new URL(sitio + "Canciones/actualizar/" + replaceSpacesWithPlus(nombreCancion));
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -58,7 +66,7 @@ public class CancionDAO {
 
 			// Construcción del objeto JSON para la actualización de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreCancion", nombreCancion);
+			jsonRequest.put("nombreCancion", replaceSpacesWithPlus(nombreCancion));
 			jsonRequest.put("nombreArtista", nuevaCancion.getNombreArtista());
 			jsonRequest.put("generoMusical", nuevaCancion.getGeneroMusical());
 			jsonRequest.put("rutaDelArchivo", nuevaCancion.getRutaDelArchivo());
@@ -83,7 +91,7 @@ public class CancionDAO {
 	}
 
 	public static int eliminarCancion(String nombreCancion) throws IOException {
-		URL url = new URL(sitio + "Canciones/eliminar/" + nombreCancion);
+		URL url = new URL(sitio + "Canciones/eliminar/" + replaceSpacesWithPlus(nombreCancion));
 
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
 		try {
@@ -93,7 +101,7 @@ public class CancionDAO {
 
 			// JSON para eliminar por nombre de la canción
 			JSONObject jsonRequest = new JSONObject();
-			jsonRequest.put("nombreCancion", nombreCancion);
+			jsonRequest.put("nombreCancion", replaceSpacesWithPlus(nombreCancion));
 
 			// Imprimir estado en la consola
 			System.out.println("Enviando solicitud de eliminación...");
@@ -140,7 +148,7 @@ public class CancionDAO {
 			JSONObject jsonObject = (JSONObject) obj;
 			CancionDTO cancion = new CancionDTO();
 
-			cancion.setNombreCancion((String) jsonObject.get("nombreCancion"));
+			cancion.setNombreCancion(replacePlusWithSpaces((String) jsonObject.get("nombreCancion")));
 			cancion.setNombreArtista((String) jsonObject.get("nombreArtista"));
 			cancion.setGeneroMusical((String) jsonObject.get("generoMusical"));
 			cancion.setRutaDelArchivo((String) jsonObject.get("rutaDelArchivo"));

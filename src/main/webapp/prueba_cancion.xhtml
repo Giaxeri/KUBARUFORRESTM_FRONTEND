@@ -35,15 +35,36 @@
 
 		<p:commandButton value="Registrar" action="#{cancionBean.actualizar}" />
 
-		<h3 style="margin-top: 0">Basic PickList</h3>
-		<p:pickList id="canciones" value="#{cancionBean.canciones}"
-			var="cancion" itemLabel="#{cancion.nombreCancion}"
-			itemValue="#{cancion}" />
+		<div>
+			<p:panel style="background-color: #27282c;">
+				<h3 style="margin-top: 0">Basic PickList</h3>
+				<p:pickList id="canciones" value="#{cancionBean.canciones}"
+					var="cancion" itemLabel="#{cancion.nombreCancion}"
+					itemValue="#{cancion}" />
 
-		<p:commandButton id="CancionesSumit" value="Agregar a lista"
-			update="cancionForm" style="margin-top:5px" />
+				<p:commandButton id="CancionesSumit" value="Agregar a lista"
+					update="cancionForm" style="margin-top:5px" />
+			</p:panel>
+		</div>
 
 	</h:form>
+	
+	<h:form>
+			<p:dataTable var="cancion" value="#{cancionBean.obtenerCanciones()}"
+				styleClass="dataTableStyle">
+				<p:column headerText="Nombre del Artista">
+					<h:outputText value="#{cancion.nombreArtista}" />
+				</p:column>
+
+				<p:column headerText="Nombre de la cancion">
+					<h:outputText value="#{cancion.nombreCancion}" />
+				</p:column>
+
+				<p:column headerText="Genero musical">
+					<h:outputText value="#{cancion.generoMusical}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 
 
 </h:body>

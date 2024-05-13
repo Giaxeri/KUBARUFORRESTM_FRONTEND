@@ -1,6 +1,6 @@
 package co.edu.unbosque.dao;
 
-import java.io.IOException; 
+import java.io.IOException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +22,14 @@ public class EmisoraDAO {
 
 	private static URL url;
 	private static String sitio = "http://localhost:8088/";
+
+	public static String replaceSpacesWithPlus(String text) {
+		return text.replaceAll(" ", "+");
+	}
+
+	public static String replacePlusWithSpaces(String text) {
+		return text.replaceAll("\\+", " ");
+	}
 
 	public static ArrayList<EmisoraDTO> getJSON()
 			throws IOException, ParseException, org.json.simple.parser.ParseException {
@@ -50,7 +58,7 @@ public class EmisoraDAO {
 		while (i.hasNext()) {
 			JSONObject innerObj = (JSONObject) i.next();
 			EmisoraDTO emisora = new EmisoraDTO();
-			emisora.setNombreBanda(innerObj.getString("NombreEmisora: ".toString()));
+			emisora.setNombreBanda(innerObj.getString(replacePlusWithSpaces("NombreEmisora: ".toString())));
 			emisora.setTipoEmisora(innerObj.getString("modoTransmicion: ".toString()));
 			emisora.setGeneroMusical(innerObj.getString("tipoMusica: ".toString()));
 			lista.add(emisora);
@@ -71,8 +79,9 @@ public class EmisoraDAO {
 		http.setDoOutput(true);
 		http.setRequestProperty("Accept", "application/json");
 		http.setRequestProperty("Content-Type", "application/json");
-		String data = "{" + "\"nombreEmisora\":\"" + emisora.getNombreBanda() + "\",\"modoTransmicion\": \""
-				+ emisora.getTipoEmisora() + "\",\"tipoMusica\": \"" + emisora.getGeneroMusical() + "\"}";
+		String data = "{" + "\"nombreEmisora\":\"" + replaceSpacesWithPlus(emisora.getNombreBanda())
+				+ "\",\"modoTransmicion\": \"" + emisora.getTipoEmisora() + "\",\"tipoMusica\": \""
+				+ emisora.getGeneroMusical() + "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
 		stream.write(out);

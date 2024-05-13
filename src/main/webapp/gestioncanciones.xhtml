@@ -144,6 +144,31 @@ a span {
 	position: relative;
 	z-index: 1;
 }
+
+.dataTableStyle {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: white; /* Establece el color de fondo de la tabla */
+}
+
+/* Estilos para las celdas de encabezado */
+.dataTableStyle th {
+	background-color: #f2f2f2;
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+/* Estilos para las celdas de datos */
+.dataTableStyle td {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+/* Estilos alternativos para filas */
+.dataTableStyle tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
 </style>
 <script>
 	function toggleCampoArchivo() {
@@ -221,15 +246,14 @@ a span {
 			<div class="container">
 				<br></br> <a href="#" id="crear-btn" style="--color: green"
 					onclick="toggleCampoArchivo();"><span>Crear</span><i></i></a> <br></br>
-
+				<br></br> <br></br> <br></br> <br></br> <br></br> <a href="#"
+					style="--color: red" onclick="toggleEliminar();"><span>Eliminar</span><i></i></a>
 				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
-					href="#" style="--color: red" onclick="toggleEliminar();"><span>Eliminar</span><i></i></a>
-				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
-				<a href="#" style="--color: blue" onclick="toggleActualizar();"><span>Actualizar</span><i></i></a>
-				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
-				<a href="index.xhtml" style="--color: orange"><span>Config.
-						Emisora</span><i></i></a>
-
+					href="#" style="--color: blue" onclick="toggleActualizar();"><span>Actualizar</span><i></i></a>
+				<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <a
+					href="reproductor.xhtml" style="--color: orange"><span>
+						Reproductor</span><i></i></a> <br></br> <br></br> <br></br> <br></br> <br></br>
+				<br></br> <a href="index.xhtml" style="--color: black"><span>Volver</span><i></i></a>
 			</div>
 
 			<div class="custom-upload" id="campo-archivo" style="display: none;">
@@ -249,7 +273,7 @@ a span {
 				<br> </br> <label for="url-cancion" class="poppins-semibold"
 					style="color: white;">URL de la Canción:</label>
 				<h:inputText id="url-cancion"
-					style="margin-bottom: 10px; width: 200%; padding: 5px;"
+					style="margin-bottom: 10px; width: 60%; padding: 5px;"
 					value="#{cancionBean.rutaDelArchivo}"></h:inputText>
 
 				<br></br> <br></br> <label class="poppins-semibold"
@@ -318,7 +342,7 @@ a span {
 					class="poppins-semibold" style="color: white;">URL de la
 					Canción:</label>
 				<h:inputText id="url-cancion-actualizar"
-					style="margin-bottom: 10px; width: 200%; padding: 5px;"
+					style="margin-bottom: 10px; width: 60%; padding: 5px;"
 					value="#{cancionBean.rutaDelArchivo}"></h:inputText>
 
 				<br></br>
@@ -327,7 +351,23 @@ a span {
 			</div>
 		</p:panel>
 	</h:form>
+	<h:form>
+		<p:dataTable var="cancion" value="#{cancionBean.obtenerCanciones()}"
+			styleClass="dataTableStyle">
+			<p:column headerText="Nombre del Artista">
+				<h:outputText value="#{cancion.nombreArtista}" />
+			</p:column>
 
-	<!-- Otros elementos de la página -->
+			<p:column headerText="Nombre de la cancion">
+				<h:outputText value="#{cancion.nombreCancion}" />
+			</p:column>
+
+			<p:column headerText="Genero musical">
+				<h:outputText value="#{cancion.generoMusical}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+
 </body>
 </html>
