@@ -95,7 +95,3 @@ src/main/
     └── WEB-INF/                # web.xml, faces-config.xml y librerías
 ```
 
-## Equipo
-
-Proyecto desarrollado en equipo. Aporte de **Gianfranco Peniche Uribe** ([@Giaxeri](https://github.com/Giaxeri)):
-configuración inicial del repositorio, interfaz de la página principal y de gestión de canciones, y el reproductor de audio.
