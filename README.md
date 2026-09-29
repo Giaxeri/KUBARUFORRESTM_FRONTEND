@@ -41,7 +41,7 @@ que emite y las reproduce desde el navegador. Los datos se guardan en un **backe
 │        │         ▼          │                            └────────────┬────────────┘
 │  Managed Beans (JSF)        │                                         │
 │        │                    │                                         ▼
-│  DAO (HttpURLConnection) ───┼──►                                 Base de datos
+│  DAO (HttpURLConnection) ───┼──►                                 Base de datos!
 │  DTO                        │
 └─────────────────────────────┘
 ```
