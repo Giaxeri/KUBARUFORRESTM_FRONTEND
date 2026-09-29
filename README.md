@@ -1,6 +1,6 @@
 <div align="center">
 
-# Kubaru Forrest M — Frontend
+# Kubaru Forrest  — Frontend
 
 Aplicación web en **Java EE (JSF + PrimeFaces)** para gestionar emisoras de radio en línea y su catálogo de canciones,
 con reproductor de audio integrado. Consume una **API REST** mediante peticiones HTTP con JSON.
